@@ -1,8 +1,9 @@
 machine:
   environment:
-    NODE_VERSION="8.1.4"
-    UNIFIO_DOCKERFILE="docker/unifio/Dockerfile"
-    STRONG_PM_IMAGE="unifio/strong-pm"
+    NODE_VERSION: '8.1.4'
+    UNIFIO_DOCKERFILE: 'docker/unifio/Dockerfile'
+    STRONG_PM_IMAGE: 'unifio/strong-pm'
+
   services:
     - docker
 
@@ -18,7 +19,7 @@ dependencies:
 
 test:
   override:
-    - docker run --entrypoint /usr/local/bin/npm "${STRONG_PM_IMAGE}" -la
+    - docker run --entrypoint /usr/local/bin/npm "${STRONG_PM_IMAGE}" version
     - docker run --entrypoint /usr/bin/env "${STRONG_PM_IMAGE}" | grep -i version
 
 deployment:
@@ -26,5 +27,5 @@ deployment:
     branch: master
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker tag -f `docker images | grep -E '"${STRONG_PM_IMAGE}"' | awk '{print $3}'` "${STRONG_PM_IMAGE}":${NODE_VERSION}.${CIRCLE_BUILD_NUM}
+      - docker tag -f $(docker images | grep -E '"${STRONG_PM_IMAGE}"' | awk '{print $3}') "${STRONG_PM_IMAGE}":${NODE_VERSION}.${CIRCLE_BUILD_NUM}
       - docker push "${STRONG_PM_IMAGE}"
