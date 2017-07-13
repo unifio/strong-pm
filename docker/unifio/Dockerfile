@@ -1,4 +1,6 @@
-FROM node:latest
+FROM node:8.1.4
+MAINTAINER Unif.io, Inc. <support@unif.io>
+LABEL NODE_VERSION="8.1.4"
 
 RUN useradd -ms /bin/bash strong-pm \
     && chown -R strong-pm:strong-pm /usr/local \
