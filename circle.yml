@@ -19,7 +19,7 @@ dependencies:
 
 test:
   override:
-    - docker run --entrypoint /usr/local/bin/npm "${STRONG_PM_IMAGE}" -la
+    - docker run --entrypoint /usr/local/bin/npm "${STRONG_PM_IMAGE}" version
     - docker run --entrypoint /usr/bin/env "${STRONG_PM_IMAGE}" | grep -i version
 
 deployment:
